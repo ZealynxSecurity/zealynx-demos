@@ -1,0 +1,16 @@
+{
+  "name": "newtech-02-genius-stablecoins-demos",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "description": "Local, deliberately vulnerable stablecoin demos for New Tech 02 (GENIUS Act). anvil only, test tokens only.",
+  "scripts": {
+    "build": "cd contracts && forge build",
+    "all": "node demos/run-all.mjs"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "5.6.1",
+    "@openzeppelin/contracts-upgradeable": "5.6.1",
+    "viem": "^2.21.0"
+  }
+}

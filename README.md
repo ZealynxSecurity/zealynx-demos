@@ -6,6 +6,7 @@ yourself. One folder per video.
 | Folder | Video | What's inside |
 |---|---|---|
 | [`newtech-01-x402`](newtech-01-x402) | x402 Lets AI Agents Pay for APIs. 5 Ways Your Paid Endpoint Gets Drained. | Replay, weak binding, key drain (the 402bridge pattern), gas abuse and an agent with no budget, each vulnerable and fixed |
+| [`newtech-02-genius-stablecoins`](newtech-02-genius-stablecoins) | GENIUS Act to Code: 5 Things Your Stablecoin Contract Must Get Right | Uncapped mint (the Resolv pattern), supply above reserves, a one-path freeze, an unguarded seize and a one-key upgrade, each vulnerable and fixed |
 
 ## Ground rules
 
