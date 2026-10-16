@@ -1,0 +1,11 @@
+{
+  "name": "newtech-01-x402-demos",
+  "license": "MIT",
+  "type": "module",
+  "description": "Local, deliberately vulnerable x402 demos for New Tech 01. anvil only, test tokens only.",
+  "scripts": {
+    "build": "cd contracts && forge build",
+    "all": "node demos/run-all.mjs"
+  },
+  "dependencies": { "viem": "^2.21.0" }
+}
