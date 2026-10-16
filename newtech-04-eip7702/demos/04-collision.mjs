@@ -26,8 +26,10 @@ t.note(`storage lives on the account, not the code — slot 0 persists`);
 t.cmd(`re-delegate account → B ${short(delB)}; read B.guardian()`);
 await delegate(roles.user, delB);
 const guardian = await read(account, delBAbi, "guardian");
-if (fixed) t.ok(`  ✓ B reads its ERC-7201 slot, not slot 0 → guardian = ${short(guardian)}`);
-else t.bad(`  ✗ B reads slot 0 → guardian = ${short(guardian)} (left by A)`);
+// The verdict comes from the value B actually reads, not from the flag.
+const leftByA = guardian.toLowerCase() === roles.attacker.address.toLowerCase();
+if (leftByA) t.bad(`  ✗ B reads slot 0 → guardian = ${short(guardian)} (left by A)`);
+else t.ok(`  ✓ B reads its ERC-7201 slot, not slot 0 → guardian = ${short(guardian)}`);
 
-t.big(fixed ? `GUARDIAN = ${short(guardian)} (clean)` : `GUARDIAN = ${short(guardian)} (left by A)`);
+t.big(`GUARDIAN = ${short(guardian)} ${leftByA ? "(left by A)" : "(clean)"}`);
 t.save(); stopChain(); process.exit(0);

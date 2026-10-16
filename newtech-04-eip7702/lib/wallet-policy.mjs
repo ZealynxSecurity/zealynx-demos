@@ -10,9 +10,8 @@ export function makeWalletSigner(account, { allowlist = [] } = {}) {
   return {
     /** Refuses or signs. `chainId` may be a number or bigint; 0 means "every chain". */
     async signDelegation({ chainId, delegate, nonce }) {
-      if (Number(chainId) === 0 || !trusted.has(delegate.toLowerCase())) {
-        throw new PolicyError(`delegate not on allowlist (chainId ${Number(chainId)})`);
-      }
+      if (Number(chainId) === 0) throw new PolicyError("chainId 0 is valid on every chain");
+      if (!trusted.has(delegate.toLowerCase())) throw new PolicyError("delegate not on allowlist");
       return account.signAuthorization({ chainId: Number(chainId), nonce, address: delegate });
     },
     isTrusted: (delegate) => trusted.has(delegate.toLowerCase()),

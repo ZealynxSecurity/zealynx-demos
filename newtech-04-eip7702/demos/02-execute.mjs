@@ -34,5 +34,6 @@ const stolen = await read(qnt, abis.qnt, "balanceOf", [roles.attacker.address]);
 if (r.ok) t.bad(`  ✓ ran as the admin → attacker took ${fmtQnt(stolen)} tQNT`);
 else t.ok(`  ✗ reverted: ${r.name}  (caller is not the account itself)`);
 
-t.big(fixed ? `POOL SAFE: ${fmtQnt(poolLeft)} tQNT` : `pool ${fmtQnt(poolBefore)} → ${fmtQnt(poolLeft)} tQNT`);
+// The verdict comes from the pool balance, not from the flag.
+t.big(poolLeft === poolBefore ? `POOL SAFE: ${fmtQnt(poolLeft)} tQNT` : `pool ${fmtQnt(poolBefore)} → ${fmtQnt(poolLeft)} tQNT`);
 t.save(); stopChain(); process.exit(0);

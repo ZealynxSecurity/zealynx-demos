@@ -6,10 +6,12 @@ pragma solidity ^0.8.26;
 /// msg.sender). Sub-calls that revert are counted, not propagated, so the batch
 /// survives a per-address limit.
 contract BatchDelegate {
+    event Batch(uint256 ok, uint256 reverted);
     function batchMint(address minter, uint256 n) external returns (uint256 ok, uint256 reverted) {
         for (uint256 i; i < n; i++) {
             (bool s, ) = minter.call(abi.encodeWithSignature("mint()"));
             if (s) ok++; else reverted++;
         }
+        emit Batch(ok, reverted);
     }
 }

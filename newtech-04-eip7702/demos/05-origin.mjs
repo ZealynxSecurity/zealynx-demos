@@ -3,7 +3,7 @@
 // transaction it sends itself — so tx.origin == msg.sender holds on every call.
 //   node demos/05-origin.mjs           50 mints land in one transaction
 //   node demos/05-origin.mjs --fixed   a per-address limit holds → 1 mints, 49 revert
-import { encodeFunctionData } from "viem";
+import { encodeFunctionData, parseEventLogs } from "viem";
 import { startChain, stopChain, deploy, roles, abis, delegate, sendRaw, read, short } from "../lib/chain.mjs";
 import { session } from "../lib/term.mjs";
 
@@ -24,12 +24,14 @@ t.note(fixed ? `mint limits one per address` : `mint guards with require(tx.orig
 await delegate(eoa, batch);
 t.note(`EOA ${short(eoa.address)} delegated to the batcher ${short(batch)}`);
 t.cmd(`EOA self-tx → batchMint(mint, 50)   # one transaction`);
-await sendRaw(eoa, { to: eoa.address, data: encodeFunctionData({ abi: abis.batch, functionName: "batchMint", args: [minter, 50n] }) });
+const receipt = await sendRaw(eoa, { to: eoa.address, data: encodeFunctionData({ abi: abis.batch, functionName: "batchMint", args: [minter, 50n] }) });
 
 const minted = await read(minter, minterAbi, "minted", [eoa.address]);
-const reverted = 50n - minted;
-if (fixed) t.ok(`  ✓ per-address limit held: ${minted} minted, ${reverted} reverted`);
+// Counted by the batcher itself and read from its Batch event, not inferred.
+const [ev] = parseEventLogs({ abi: abis.batch, logs: receipt.logs, eventName: "Batch" });
+const reverted = ev.args.reverted;
+if (reverted > 0n) t.ok(`  ✓ per-address limit held: ${minted} minted, ${reverted} reverted`);
 else t.bad(`  ✗ ${minted} mints in a single transaction`);
 
-t.big(fixed ? `${minted} MINTED, ${reverted} REVERTED` : `${minted} MINTED IN 1 TX`);
+t.big(reverted > 0n ? `${minted} MINTED, ${reverted} REVERTED` : `${minted} MINTED IN 1 TX`);
 t.save(); stopChain(); process.exit(0);

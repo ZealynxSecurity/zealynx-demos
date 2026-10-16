@@ -43,5 +43,8 @@ if (fixed) {
 }
 const owner = await read(account, delegateAbi, "owner");
 
-t.big(fixed ? `OWNER = ${short(owner)} (the account)` : `owner = ${short(owner)} (attacker)`);
+// The label comes from who the owner actually is, not from the flag.
+const who = owner.toLowerCase() === roles.attacker.address.toLowerCase() ? "(attacker)"
+  : owner.toLowerCase() === roles.admin.address.toLowerCase() ? "(the account)" : "";
+t.big(`OWNER = ${short(owner)} ${who}`);
 t.save(); stopChain(); process.exit(0);
