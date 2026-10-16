@@ -8,6 +8,7 @@ yourself. One folder per video.
 | [`newtech-01-x402`](newtech-01-x402) | x402 Lets AI Agents Pay for APIs. 5 Ways Your Paid Endpoint Gets Drained. | Replay, weak binding, key drain (the 402bridge pattern), gas abuse and an agent with no budget, each vulnerable and fixed |
 | [`newtech-02-genius-stablecoins`](newtech-02-genius-stablecoins) | GENIUS Act to Code: 5 Things Your Stablecoin Contract Must Get Right | Uncapped mint (the Resolv pattern), supply above reserves, a one-path freeze, an unguarded seize and a one-key upgrade, each vulnerable and fixed |
 | [`newtech-03-agent-wallets`](newtech-03-agent-wallets) | Your AI Agent Has a Wallet. 5 Ways Someone Empties It | A scripted agent (no LLM) taken over by an encoded post, an airdropped permission badge, a poisoned MCP tool, a key-stealing helper package and an unlimited approval, each vulnerable and fixed |
+| [`newtech-04-eip7702`](newtech-04-eip7702) | EIP-7702: 5 Bugs We'd Flag Before You Ship a Delegate Contract | A delegation to a sweeper, an open `execute`, a front-run `initialize`, storage left by the previous delegate and a `tx.origin` check beaten by batching, each vulnerable and fixed |
 
 ## Ground rules
 
