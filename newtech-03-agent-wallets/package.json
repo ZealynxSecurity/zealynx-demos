@@ -1,0 +1,15 @@
+{
+  "name": "newtech-03-agent-wallets-demos",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "description": "Local, deliberately vulnerable AI-agent-wallet demos for New Tech 03. anvil only, test tokens only, a scripted (no-LLM) agent, our own MCP server and listener on 127.0.0.1.",
+  "scripts": {
+    "build": "cd contracts && forge build",
+    "all": "node demos/run-all.mjs"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "5.6.1",
+    "viem": "^2.21.0"
+  }
+}

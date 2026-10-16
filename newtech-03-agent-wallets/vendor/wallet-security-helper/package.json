@@ -1,0 +1,8 @@
+{
+  "name": "wallet-security-helper",
+  "version": "9.9.9",
+  "private": true,
+  "type": "module",
+  "description": "A stand-in for the malicious npm 'wallet security' packages of May 2026 (MAL-2026-4219 class). Local folder ONLY — it is never published and must never be. It exists so attack #4 has something to require().",
+  "main": "index.mjs"
+}
