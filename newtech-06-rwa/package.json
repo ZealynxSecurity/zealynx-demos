@@ -1,0 +1,15 @@
+{
+  "name": "newtech-06-rwa-demos",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "description": "Local, deliberately vulnerable tokenised-RWA demos for New Tech 06. anvil only, our own simplified stand-ins (ERC-3643-style token, identity registry, price and NAV feeds, vaults), test tokens, anvil public dev keys, no live network. Five bugs, each vulnerable then fixed.",
+  "scripts": {
+    "build": "cd contracts && forge build",
+    "all": "node demos/run-all.mjs"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "5.6.1",
+    "viem": "^2.21.0"
+  }
+}

@@ -9,6 +9,8 @@ yourself. One folder per video.
 | [`newtech-02-genius-stablecoins`](newtech-02-genius-stablecoins) | GENIUS Act to Code: 5 Things Your Stablecoin Contract Must Get Right | Uncapped mint (the Resolv pattern), supply above reserves, a one-path freeze, an unguarded seize and a one-key upgrade, each vulnerable and fixed |
 | [`newtech-03-agent-wallets`](newtech-03-agent-wallets) | Your AI Agent Has a Wallet. 5 Ways Someone Empties It | A scripted agent (no LLM) taken over by an encoded post, an airdropped permission badge, a poisoned MCP tool, a key-stealing helper package and an unlimited approval, each vulnerable and fixed |
 | [`newtech-04-eip7702`](newtech-04-eip7702) | EIP-7702: 5 Bugs We'd Flag Before You Ship a Delegate Contract | A delegation to a sweeper, an open `execute`, a front-run `initialize`, storage left by the previous delegate and a `tx.origin` check beaten by batching, each vulnerable and fixed |
+| [`newtech-05-crosschain`](newtech-05-crosschain) | A $292M Bridge Hack Came Down to One Verifier. 5 Checks Before Launch | A 1-of-1 verifier set, `abi.encodePacked` over variable-length fields, an unbound replayable message, a duplicate key in a signed batch and a bridge with no rate limit, on our own stand-in adapter, each vulnerable and fixed |
+| [`newtech-06-rwa`](newtech-06-rwa) | Tokenised RWAs: 5 Checks Before Launch (A Price From the Future Cost $23.75M) | A future-dated signed price report, redemption at a stale NAV, a wrapper that skips compliance, one agent key that force-transfers every holder and async redemptions priced at request time, each vulnerable and fixed |
 
 ## Ground rules
 
