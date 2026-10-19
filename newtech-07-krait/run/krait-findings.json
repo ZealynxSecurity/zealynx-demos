@@ -1,0 +1,163 @@
+{
+  "protocol": "corpus",
+  "date": "2026-10-19",
+  "scope": "src/ (20 files, 476 LOC, Solidity 0.8.26)",
+  "findings": [
+    {
+      "id": "KRAIT-001",
+      "title": "Unauthenticated arbitrary executor drains any 7702-delegated account",
+      "severity": "critical",
+      "file": "src/delegate/OpenDelegate.sol",
+      "line": 7,
+      "category": "access-control",
+      "evidence": "CODE-TRACE",
+      "description": "execute(Call[]) is external payable with no caller authorization; in an EIP-7702 context it runs arbitrary calls with the delegated account's full balance and approvals.",
+      "impact": "Any address drains all ETH/tokens from any account that installs OpenDelegate as its 7702 delegate.",
+      "rootCause": "Universal execute entrypoint without owner/msg.sender check.",
+      "recommendation": "Require msg.sender == address(this) (validated self-call) or an ECDSA auth over the call batch with a nonce."
+    },
+    {
+      "id": "KRAIT-002",
+      "title": "PerpVault price reports are replayable (empty _checkTime, no nonce)",
+      "severity": "critical",
+      "file": "src/rwa/PerpVault.sol",
+      "line": 22,
+      "category": "signature-replay",
+      "evidence": "CODE-TRACE",
+      "description": "_verify authenticates a signed Report{price,ts} but _checkTime is an empty virtual no-op and there is no nonce or msg.sender binding; historical reports in public calldata are reusable.",
+      "impact": "Attacker opens at a stale low price and closes at a stale high price, extracting other traders' collateral.",
+      "rootCause": "Report authentication omits timestamp/nonce validation; _checkTime unimplemented in the deployed contract.",
+      "recommendation": "Enforce MAX_AGE on r.ts, bind a per-user nonce into the signed payload, and consume report digests."
+    },
+    {
+      "id": "KRAIT-003",
+      "title": "ReplayAdapter releases with no replay protection",
+      "severity": "critical",
+      "file": "src/bridge/ReplayAdapter.sol",
+      "line": 13,
+      "category": "cross-chain-bridge",
+      "evidence": "CODE-TRACE",
+      "description": "release() checks verifier sigs over keccak256(abi.encode(to,amount)) but records no processed state and binds no nonce or chainid; Adapter.sol has the processed guard this contract omits.",
+      "impact": "Any caller replays a signed release repeatedly, sending N x the signed amount out of the adapter until drained; also cross-chain replayable.",
+      "rootCause": "Missing replay guard / nonce / chain-id binding.",
+      "recommendation": "Add mapping(bytes32=>bool) processed, include nonce + block.chainid in the digest, set processed before transferring."
+    },
+    {
+      "id": "KRAIT-004",
+      "title": "PackedAdapter digest collision inflates payout",
+      "severity": "high",
+      "file": "src/bridge/PackedAdapter.sol",
+      "line": 14,
+      "category": "cross-chain-bridge",
+      "evidence": "CODE-TRACE",
+      "description": "digestOf hashes abi.encodePacked(chainid,nonce,amount,recipient) with amount and recipient both dynamic bytes and no delimiter, so the amount/recipient boundary is ambiguous and distinct pairs collide.",
+      "impact": "Front-running a signed release with a 32-byte padded recipient, an attacker re-splits bytes to set amount = A*2^96 to the same address with the same sigs, over-paying from the adapter.",
+      "rootCause": "abi.encodePacked over two adjacent dynamic arguments.",
+      "recommendation": "Use abi.encode (length-prefixed) or hash fixed-width fields (uint256 amount, address recipient)."
+    },
+    {
+      "id": "KRAIT-005",
+      "title": "Tier.spend has no access control and no real daily limit",
+      "severity": "high",
+      "file": "src/wallet/Tier.sol",
+      "line": 25,
+      "category": "access-control",
+      "evidence": "CODE-TRACE",
+      "description": "spend(to,amount) transfers the contract's own tokens with no caller check; dailyLimit returns BASE for any caller, and there is no timestamp/cumulative-spend state so the 'daily' limit is only a per-call cap.",
+      "impact": "Anyone drains the Tier wallet in 10e6 increments via repeated spend calls.",
+      "rootCause": "Missing authorization plus absent daily-window accounting.",
+      "recommendation": "Restrict spend to owner/authorized agents and track cumulative spend within a rolling 24h window against dailyLimit."
+    },
+    {
+      "id": "KRAIT-006",
+      "title": "Router.pull uses an arbitrary from in transferFrom",
+      "severity": "high",
+      "file": "src/wallet/Router.sol",
+      "line": 15,
+      "category": "access-control",
+      "evidence": "CODE-TRACE",
+      "description": "pull(from,amount) calls token.transferFrom(from, sink, amount) with from unbound and no authorization.",
+      "impact": "Any third party moves any Router-approver's tokens to the fixed sink at will, stripping approvers of custody/timing control (and losing funds if sink is one-way).",
+      "rootCause": "from not constrained to msg.sender.",
+      "recommendation": "Use from = msg.sender, or require explicit per-pull authorization from from."
+    },
+    {
+      "id": "KRAIT-007",
+      "title": "RwaToken transfer check ignores the sender",
+      "severity": "medium",
+      "file": "src/rwa/RwaToken.sol",
+      "line": 17,
+      "category": "eip-standard-compliance",
+      "evidence": "CODE-TRACE",
+      "description": "canTransfer(address,to) validates only registry.isVerified(to); the from argument is unused, so sender eligibility is never checked.",
+      "impact": "A holder whose verification is revoked can still transfer to any verified address, defeating the compliance freeze.",
+      "rootCause": "Sender eligibility never validated.",
+      "recommendation": "return registry.isVerified(from) && registry.isVerified(to);"
+    },
+    {
+      "id": "KRAIT-008",
+      "title": "Wrapper escapes RWA transfer restrictions",
+      "severity": "medium",
+      "file": "src/rwa/Wrapper.sol",
+      "line": 14,
+      "category": "token-flow",
+      "evidence": "CODE-TRACE",
+      "description": "wtFUND is a plain ERC20 with no transfer gating; wrapping moves restricted RwaToken value into a freely transferable token.",
+      "impact": "Restricted exposure circulates to non-verified parties; a non-verified holder unwraps via a verified mule, fully bypassing the identity gate.",
+      "rootCause": "Wrapped token does not inherit the underlying's transfer restrictions.",
+      "recommendation": "Apply the registry.isVerified gate to wtFUND transfers, or restrict wrap/unwrap/holding to verified addresses."
+    },
+    {
+      "id": "KRAIT-009",
+      "title": "RedemptionVault never checks NAV staleness or zero",
+      "severity": "medium",
+      "file": "src/rwa/RedemptionVault.sol",
+      "line": 19,
+      "category": "oracle-staleness",
+      "evidence": "CODE-TRACE",
+      "description": "_nav() returns feed.nav() with no staleness or non-zero check, despite declared error StaleNAV(), NavFeed.updatedAt, and an unused ref feed.",
+      "impact": "Redemptions clear at a stale price during feed outages; a zero NAV makes a redeemer surrender shares for 0 USDC.",
+      "rootCause": "Declared staleness machinery not wired into the redemption path.",
+      "recommendation": "Require feed.nav() > 0 and block.timestamp - feed.updatedAt() <= MAX_AGE before pricing a redemption."
+    },
+    {
+      "id": "KRAIT-010",
+      "title": "AsyncRedeem settles at a backward-looking NAV",
+      "severity": "medium",
+      "file": "src/rwa/AsyncRedeem.sol",
+      "line": 39,
+      "category": "economic-design",
+      "evidence": "CODE-TRACE",
+      "description": "requestRedeem stamps the current epoch and settle pays navAt(r.epoch) — the NAV known at request time, with no forward pricing (NotYetPriced declared but unused); settle is permissionless and same-epoch callable.",
+      "impact": "A holder anticipating a write-down redeems at the current high NAV and exits whole, socializing the loss onto remaining holders.",
+      "rootCause": "Backward-looking NAV selection instead of forward (next-strike) pricing.",
+      "recommendation": "Price redemptions at the first NAV struck strictly after the request epoch; reject settle until that strike exists."
+    },
+    {
+      "id": "KRAIT-011",
+      "title": "DelegateA.setOwner unauthenticated; DelegateA/DelegateB share storage slot 0",
+      "severity": "medium",
+      "file": "src/delegate/DelegateA.sol",
+      "line": 6,
+      "category": "access-control",
+      "evidence": "CODE-TRACE",
+      "description": "DelegateA.setOwner has no caller check; DelegateA.owner and DelegateB.guardian both occupy slot 0, so a 7702 account redelegating A->B reinterprets the stale owner value as guardian.",
+      "impact": "Anyone hijacks the account owner; redelegation yields an unintended guardian (uninitialized-delegate hazard).",
+      "rootCause": "Missing auth on a state setter plus colliding storage layouts across delegates.",
+      "recommendation": "Authorize setOwner and standardize a namespaced storage layout (ERC-7201) across all delegates, re-initializing on redelegation."
+    }
+  ],
+  "lowFindings": [
+    { "id": "KRAIT-L1", "title": "TestToken.burn public/unguarded, used as AsyncRedeem shares", "file": "src/rwa/TestToken.sol", "line": 9 },
+    { "id": "KRAIT-L2", "title": "InitDelegate.initialize front-runnable", "file": "src/delegate/InitDelegate.sol", "line": 7 },
+    { "id": "KRAIT-L3", "title": "Mint uses tx.origin == msg.sender (7702-bypassable)", "file": "src/delegate/Mint.sol", "line": 7 },
+    { "id": "KRAIT-L4", "title": "Verifiers: threshold not required > 0, no verifier-removal path", "file": "src/bridge/Verifiers.sol", "line": 11 }
+  ],
+  "summary": {
+    "critical": 3,
+    "high": 3,
+    "medium": 5,
+    "low": 4,
+    "total": 15
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "newtech-07-krait-demos",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "description": "New Tech 07: our AI auditor (Krait, Claude Code skill) over a corpus of 18 planted bugs from the Episode 3-6 demos, and an AI agent writing a Foundry exploit for one of them on a local anvil chain. Local only, our own contracts.",
+  "scripts": { "all": "node demos/planted.mjs && node demos/exploit.mjs" }
+}

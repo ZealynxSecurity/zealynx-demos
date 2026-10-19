@@ -1,0 +1,3 @@
+casts/*.raw.json
+corpus/out/
+corpus/cache/

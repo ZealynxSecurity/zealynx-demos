@@ -1,0 +1,15 @@
+{
+  "name": "newtech-08-vault-demos",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "description": "Local, deliberately vulnerable lending-market and vault demos for New Tech 08. anvil only, our own minimal market, AMM, oracle and curator vault (not real protocol code), test tokens, anvil public dev keys, no live network. Five bugs, each vulnerable then fixed.",
+  "scripts": {
+    "build": "cd contracts && forge build",
+    "all": "node demos/run-all.mjs"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "5.6.1",
+    "viem": "^2.21.0"
+  }
+}

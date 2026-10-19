@@ -1,7 +1,7 @@
 # EIP-7702 delegates: five bugs we'd flag before you ship (demo code)
 
 The attacks and fixes from the Zealynx video *EIP-7702: 5 Bugs We'd Flag Before You Ship a
-Delegate Contract* ([watch it](VIDEO_URL)).
+Delegate Contract* ([watch it](https://youtu.be/UZXgivWpn0Y)).
 
 EIP-7702 lets an EOA temporarily run a contract's code by signing an *authorization*. That
 breaks two old assumptions at once: "an EOA has no code" and "tx.origin == msg.sender means a

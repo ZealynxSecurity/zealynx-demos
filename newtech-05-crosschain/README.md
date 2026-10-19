@@ -1,7 +1,7 @@
 # Cross-chain messages: five checks before launch (demo code)
 
 The attacks and fixes from the Zealynx video *A $292M Bridge Hack Came Down to One Verifier. 5
-Checks Before Launch* ([watch it](VIDEO_URL)).
+Checks Before Launch* ([watch it](https://youtu.be/k10fypDhA0M)).
 
 When your app acts on a message from another chain, it can't see that chain. It sees signatures
 over bytes. These five demos show what goes wrong with who signs, what bytes they sign, and how

@@ -1,0 +1,79 @@
+{
+  "_note": "Hand-scored against planted-bugs.md (sealed before the run). Found = a reported finding (any severity, including Low) whose root cause matches the planted bug. A mention only in Architecture Observations, or as dead code in a different finding's fix, does not count.",
+  "run": {
+    "tool": "Krait (Claude Code skill, /krait src/)",
+    "mode": "headless claude -p, corpus copied to an isolated folder with no answer key",
+    "started": "2026-10-19T12:35:49Z",
+    "finished": "2026-10-19T12:50:30Z"
+  },
+  "planted": {
+    "P01": {
+      "found": null,
+      "why": "KRAIT-005 flags Tier.spend for missing access control, not the badge-NFT limit escalation"
+    },
+    "P02": {
+      "found": "KRAIT-006"
+    },
+    "P03": {
+      "found": "KRAIT-001"
+    },
+    "P04": {
+      "found": "KRAIT-L2",
+      "low": true
+    },
+    "P05": {
+      "found": "KRAIT-011"
+    },
+    "P06": {
+      "found": "KRAIT-011"
+    },
+    "P07": {
+      "found": "KRAIT-L3",
+      "low": true
+    },
+    "P08": {
+      "found": "KRAIT-L4",
+      "low": true,
+      "why": "flags a zero threshold, not a 1-of-1 set"
+    },
+    "P09": {
+      "found": "KRAIT-004"
+    },
+    "P10": {
+      "found": "KRAIT-003"
+    },
+    "P11": {
+      "found": "KRAIT-003",
+      "why": "root cause names the missing chain id"
+    },
+    "P12": {
+      "found": null,
+      "why": "seen, then moved to Architecture Observations as needing trusted signers"
+    },
+    "P13": {
+      "found": "KRAIT-002"
+    },
+    "P14": {
+      "found": "KRAIT-009"
+    },
+    "P15": {
+      "found": null,
+      "why": "the unused ref feed is mentioned as dead code; the missing deviation check is never reported"
+    },
+    "P16": {
+      "found": "KRAIT-008"
+    },
+    "P17": {
+      "found": null,
+      "why": "single agent key with no cap or delay is not reported"
+    },
+    "P18": {
+      "found": "KRAIT-010"
+    }
+  },
+  "outsideKey": {
+    "KRAIT-005": "Tier.spend has no caller check. True of the stripped corpus code (the episode demo relied on who called it), so not a false alarm.",
+    "KRAIT-007": "RwaToken.canTransfer ignores the sender. Debatable: ERC-3643 also checks only the receiver's identity. Counted as outside the key, not as a false alarm.",
+    "KRAIT-L1": "TestToken.burn is public. True, but TestToken is our own open test token (open mint and burn by design in every demo), so it is outside the key."
+  }
+}

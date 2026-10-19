@@ -1,0 +1,12 @@
+[profile.default]
+src = "src"
+out = "out"
+libs = ["../../newtech-06-rwa/node_modules"]
+solc_version = "0.8.26"
+optimizer = true
+remappings = [
+  "@openzeppelin/contracts/=../../newtech-06-rwa/node_modules/@openzeppelin/contracts/",
+]
+
+[lint]
+lint_on_build = false

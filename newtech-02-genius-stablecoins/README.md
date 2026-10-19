@@ -1,7 +1,7 @@
 # GENIUS Act to code: five ways a stablecoin contract fails (demo code)
 
 The attacks and fixes from the Zealynx video *GENIUS Act to Code: 5 Things Your Stablecoin Contract Must Get
-Right* ([watch it](VIDEO_URL)).
+Right* ([watch it](https://youtu.be/PMuN-22EFZM)).
 
 **Local only:** every demo starts its own `anvil` chain on 127.0.0.1:8545, deploys our own contracts and
 uses test tokens. Nothing here talks to a live network, a real stablecoin or a third-party endpoint.

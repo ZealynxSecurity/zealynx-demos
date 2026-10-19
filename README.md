@@ -11,6 +11,8 @@ yourself. One folder per video.
 | [`newtech-04-eip7702`](newtech-04-eip7702) | EIP-7702: 5 Bugs We'd Flag Before You Ship a Delegate Contract | A delegation to a sweeper, an open `execute`, a front-run `initialize`, storage left by the previous delegate and a `tx.origin` check beaten by batching, each vulnerable and fixed |
 | [`newtech-05-crosschain`](newtech-05-crosschain) | A $292M Bridge Hack Came Down to One Verifier. 5 Checks Before Launch | A 1-of-1 verifier set, `abi.encodePacked` over variable-length fields, an unbound replayable message, a duplicate key in a signed batch and a bridge with no rate limit, on our own stand-in adapter, each vulnerable and fixed |
 | [`newtech-06-rwa`](newtech-06-rwa) | Tokenised RWAs: 5 Checks Before Launch (A Price From the Future Cost $23.75M) | A future-dated signed price report, redemption at a stale NAV, a wrapper that skips compliance, one agent key that force-transfers every holder and async redemptions priced at request time, each vulnerable and fixed |
+| [`newtech-07-krait`](newtech-07-krait) | We Built an AI Auditor. Here's What It Missed on Real Protocols | Our AI auditor (Krait v8.2, Claude Code skill) over 18 bugs we planted in our own code, scored against a key sealed before the run, and an AI agent writing a working Foundry exploit for one of them on a local chain |
+| [`newtech-08-vault`](newtech-08-vault) | Your Vault Prices Collateral at $1. Here's the Day That Breaks It | A hardcoded $1 oracle, a thin token with no supply cap, a donation-inflated exchange rate, no depeg circuit breaker and a curator who moves in one block, on our own lending market and vault, each vulnerable and fixed |
 
 ## Ground rules
 

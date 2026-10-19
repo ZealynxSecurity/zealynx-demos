@@ -1,0 +1,13 @@
+# Workflow example for Episode 7: an AI review on every pull request, posted as comments.
+# A lead list for the reviewer, never an approval: the job cannot block or approve a merge.
+name: ai-review
+on: pull_request
+jobs:
+  ai-review:
+    runs-on: ubuntu-latest
+    permissions: { contents: read, pull-requests: write }
+    steps:
+      - uses: actions/checkout@v4
+      - run: npx claude -p "/krait-review $(git diff --name-only origin/main -- '*.sol')" > leads.md
+      - run: gh pr comment ${{ github.event.number }} --body-file leads.md
+        env: { GH_TOKEN: "${{ github.token }}" }
