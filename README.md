@@ -13,6 +13,7 @@ yourself. One folder per video.
 | [`newtech-06-rwa`](newtech-06-rwa) | Tokenised RWAs: 5 Checks Before Launch (A Price From the Future Cost $23.75M) | A future-dated signed price report, redemption at a stale NAV, a wrapper that skips compliance, one agent key that force-transfers every holder and async redemptions priced at request time, each vulnerable and fixed |
 | [`newtech-07-krait`](newtech-07-krait) | We Built an AI Auditor. Here's What It Missed on Real Protocols | Our AI auditor (Krait v8.2, Claude Code skill) over 18 bugs we planted in our own code, scored against a key sealed before the run, and an AI agent writing a working Foundry exploit for one of them on a local chain |
 | [`newtech-08-vault`](newtech-08-vault) | Your Vault Prices Collateral at $1. Here's the Day That Breaks It | A hardcoded $1 oracle, a thin token with no supply cap, a donation-inflated exchange rate, no depeg circuit breaker and a curator who moves in one block, on our own lending market and vault, each vulnerable and fixed |
+| [`newtech-09-v4hooks`](newtech-09-v4hooks) | Your Uniswap v4 Hook Is a Public Function. 5 Ways It Gets Drained | A callback anyone can call, a trusted `sender`, a curve that rounds the wrong way, a helper anyone can drive and a vault that routes into the attacker's pool, on our own stand-in pool manager and hooks, each vulnerable and fixed |
 
 ## Ground rules
 
