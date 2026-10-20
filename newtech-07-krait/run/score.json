@@ -1,5 +1,5 @@
 {
-  "_note": "Hand-scored against planted-bugs.md (sealed before the run). Found = a reported finding (any severity, including Low) whose root cause matches the planted bug. A mention only in Architecture Observations, or as dead code in a different finding's fix, does not count.",
+  "_note": "Hand-scored by us against planted-bugs.md (sealed before the run), strict: found = a reported finding (any severity, including Low) whose root cause AND fix cover the planted bug. A partial match counts as missed. A mention only in Architecture Observations, or as dead code in a different finding's fix, does not count. Scoring is our judgment; the reasons are listed per bug so anyone can re-score.",
   "run": {
     "tool": "Krait (Claude Code skill, /krait src/)",
     "mode": "headless claude -p, corpus copied to an isolated folder with no answer key",
@@ -19,7 +19,8 @@
     },
     "P04": {
       "found": "KRAIT-L2",
-      "low": true
+      "low": true,
+      "why": "found, but rated Low ('owner is otherwise unused')"
     },
     "P05": {
       "found": "KRAIT-011"
@@ -29,12 +30,13 @@
     },
     "P07": {
       "found": "KRAIT-L3",
-      "low": true
+      "low": true,
+      "why": "found, but rated Low ('only a counter is affected')"
     },
     "P08": {
-      "found": "KRAIT-L4",
-      "low": true,
-      "why": "flags a zero threshold, not a 1-of-1 set"
+      "found": null,
+      "partial": "KRAIT-L4",
+      "why": "half found: flags a zero threshold, but its fix (require threshold > 0) still allows the 1-of-1 deployment the episode attacks"
     },
     "P09": {
       "found": "KRAIT-004"

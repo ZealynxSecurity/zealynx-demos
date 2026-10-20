@@ -8,7 +8,8 @@ Two things are here, both on our own code only:
 1. **`planted`**: our AI auditor, Krait (v8.2, run as the Claude Code skill `/krait`), over a
    corpus of 20 files from our earlier New Tech demos with **18 bugs planted on purpose**. The
    answer key, `planted-bugs.md`, was sealed before the run and kept out of the folder Krait saw.
-   Result: **14 of 18 found** (3 of them only at Low), 4 missed, 3 findings outside the key.
+   Result, scored strictly by us (`run/score.json` gives the reason for every call): **13 of 18 found**
+   (2 of them only at Low), 5 missed (P08 half found), 3 findings outside the key.
    Note: Krait's published benchmark (v8, contests 46-50: 10 true, 0 false, 66 judged bugs) ran
    through its CLI harness. This run is a later version on a different surface.
 2. **`exploit`**: an AI agent (headless Claude Code) given one planted bug as a lead (the replay

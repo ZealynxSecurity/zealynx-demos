@@ -25,9 +25,9 @@ let found = 0, low = 0;
 for (const [id, s] of Object.entries(score.planted)) {
   const k = key[id];
   if (s.found) { found++; if (s.low) low++; t.ok(`  ✓ ${id} ${k.cls.slice(0, 48).padEnd(48)} ${s.low ? "(low)" : ""}`); }
-  else t.bad(`  ✗ ${id} ${k.cls.slice(0, 48).padEnd(48)} MISSED`);
+  else t.bad(`  ✗ ${id} ${k.cls.slice(0, 48).padEnd(48)} ${s.partial ? "MISSED (half found)" : "MISSED"}`);
 }
 const missed = Object.keys(score.planted).length - found;
-t.note(`  ${Object.keys(score.outsideKey).length} findings outside the key · ${low} of the found only at low`);
+t.note(`  strict scoring by us · ${low} of the found only at low · ${Object.keys(score.outsideKey).length} findings outside the key`);
 t.big(`FOUND ${found} OF 18 · MISSED ${missed} · NO WARNING ON THE REPORT`);
 t.save(); process.exit(0);
