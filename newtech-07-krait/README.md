@@ -1,7 +1,7 @@
 # What an AI auditor misses (demo code and run)
 
 The demos from the Zealynx video *We Built an AI Auditor. Here's What It Missed on Real
-Protocols* ([watch it](https://youtu.be/QlAjVUmC96g)).
+Protocols* ([watch it](https://youtu.be/qYBxR9ArAv8)).
 
 Two things are here, both on our own code only:
 
