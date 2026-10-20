@@ -1,7 +1,7 @@
 # Your AI agent has a wallet: five ways someone empties it (demo code)
 
 The attacks and fixes from the Zealynx video *Your AI Agent Has a Wallet. 5 Ways Someone Empties It.*
-([watch it](https://youtu.be/5OgvX0WB-wk)).
+([watch it](https://youtu.be/fPqrOfXaOHk)).
 
 **Local only:** every demo starts its own `anvil` chain on 127.0.0.1:8545, deploys our own contracts and
 uses test tokens. The "agent" is a **scripted, simulated agent — there is no LLM and no model API call**.
