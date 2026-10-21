@@ -1,7 +1,7 @@
 # Tokenised RWAs: five bugs we'd flag before you ship (demo code)
 
 The attacks and fixes from the Zealynx video *Tokenised RWAs: 5 Bugs We'd Flag Before You Ship*
-([watch it](https://youtu.be/Fi7H8zuAQqg)).
+([watch it](https://youtu.be/3f94XmZDMxM)).
 
 A tokenised fund, bond or T-bill is a smart contract that takes its truth from off-chain feeds:
 a price, a NAV, a list of who passed KYC, and an agent who can move tokens by force. Each of these

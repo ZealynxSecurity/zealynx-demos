@@ -1,7 +1,7 @@
 # Lending vaults: five ways to bad debt (demo code)
 
 The attacks and fixes from the Zealynx video *Your Vault Prices Collateral at $1. Here's the Day
-That Breaks It* ([watch it](https://youtu.be/TXun8DIRwR8)).
+That Breaks It* ([watch it](https://youtu.be/AaTj5xc_40k)).
 
 A lending vault is only as safe as the price it believes for its collateral, and how much of that
 collateral it lets in. These five demos show a market that believes the wrong price, lets in too
